@@ -3,26 +3,18 @@ const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
 const themeToggle = $("#themeToggle");
-const themeIcon = $("#themeIcon");
 const themeLabel = $("#themeLabel");
+const themeIcon = $("#themeIcon");
 const sidebar = $("#sidebar");
 const menuToggle = $("#menuToggle");
+const dialog = $("#demoDialog");
 const toastRegion = $("#toastRegion");
-const demoModal = $("#demoModal");
 
-function readTheme() {
+function getSavedTheme() {
   try {
-    return localStorage.getItem("forma-theme");
+    return localStorage.getItem("ui-library-theme");
   } catch {
     return null;
-  }
-}
-
-function saveTheme(theme) {
-  try {
-    localStorage.setItem("forma-theme", theme);
-  } catch {
-    // The theme still works when storage is unavailable.
   }
 }
 
@@ -30,64 +22,59 @@ function applyTheme(theme) {
   const dark = theme === "dark";
 
   document.documentElement.dataset.theme = dark ? "dark" : "light";
-  themeIcon.textContent = dark ? "☼" : "◐";
-  themeLabel.textContent = dark ? "Switch to light" : "Switch to dark";
-  themeToggle.setAttribute("aria-label", themeLabel.textContent);
+  themeLabel.textContent = dark ? "Dark appearance" : "Light appearance";
+  themeIcon.textContent = dark ? "☾" : "☼";
+  themeToggle.setAttribute("aria-label", `Switch to ${dark ? "light" : "dark"} appearance`);
 
-  const themeColor = $('meta[name="theme-color"]');
-  if (themeColor) {
-    themeColor.content = dark ? "#151614" : "#fafaf9";
+  const meta = $('meta[name="theme-color"]');
+  if (meta) meta.content = dark ? "#11141a" : "#ffffff";
+}
+
+function toggleTheme() {
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  applyTheme(next);
+
+  try {
+    localStorage.setItem("ui-library-theme", next);
+  } catch {
+    // Appearance still changes when storage is unavailable.
   }
 }
 
-const savedTheme = readTheme();
-applyTheme(
-  savedTheme === "dark" || savedTheme === "light"
-    ? savedTheme
-    : "light"
-);
+applyTheme(getSavedTheme() === "dark" ? "dark" : "light");
 
-themeToggle.addEventListener("click", () => {
-  const next = document.documentElement.dataset.theme === "dark"
-    ? "light"
-    : "dark";
-
-  applyTheme(next);
-  saveTheme(next);
-});
+themeToggle.addEventListener("click", toggleTheme);
+$("#footerTheme").addEventListener("click", toggleTheme);
 
 // Mobile navigation
 
 function closeMenu() {
   sidebar.classList.remove("open");
   menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Open navigation");
+  menuToggle.setAttribute("aria-label", "Open menu");
   menuToggle.textContent = "☰";
 }
 
 menuToggle.addEventListener("click", () => {
-  const isOpen = sidebar.classList.toggle("open");
+  const open = sidebar.classList.toggle("open");
 
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.setAttribute(
-    "aria-label",
-    isOpen ? "Close navigation" : "Open navigation"
-  );
-  menuToggle.textContent = isOpen ? "×" : "☰";
+  menuToggle.setAttribute("aria-expanded", String(open));
+  menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  menuToggle.textContent = open ? "×" : "☰";
+
+  if (open) $(".side-link", sidebar).focus();
 });
 
-$$(".nav-link").forEach(link => {
-  link.addEventListener("click", () => {
-    closeMenu();
+$$(".side-link").forEach(link => {
+  link.addEventListener("click", () => closeMenu());
+});
 
-    $$(".nav-link").forEach(item => {
-      item.classList.toggle("active", item === link);
-    });
-  });
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeMenu();
 });
 
 window.addEventListener("resize", () => {
-  if (window.innerWidth > 760) closeMenu();
+  if (window.innerWidth > 700) closeMenu();
 });
 
 // Toast notifications
@@ -102,6 +89,7 @@ function showToast(message, title = "Done") {
   icon.setAttribute("aria-hidden", "true");
 
   const content = document.createElement("div");
+  content.className = "toast-content";
 
   const heading = document.createElement("strong");
   heading.textContent = title;
@@ -109,34 +97,28 @@ function showToast(message, title = "Done") {
   const description = document.createElement("p");
   description.textContent = message;
 
-  const dismiss = document.createElement("button");
-  dismiss.className = "toast-dismiss";
-  dismiss.type = "button";
-  dismiss.textContent = "×";
-  dismiss.setAttribute("aria-label", "Dismiss notification");
+  const close = document.createElement("button");
+  close.className = "toast-close";
+  close.type = "button";
+  close.textContent = "×";
+  close.setAttribute("aria-label", "Dismiss notification");
 
   content.append(heading, description);
-  toast.append(icon, content, dismiss);
+  toast.append(icon, content, close);
   toastRegion.append(toast);
 
   let timer;
 
-  function removeToast() {
+  function remove() {
     clearTimeout(timer);
-
     if (!toast.isConnected) return;
 
-    toast.classList.add("toast-out");
-    toast.addEventListener("transitionend", () => toast.remove(), {
-      once: true
-    });
-
-    // Also remove if transitions are disabled.
-    setTimeout(() => toast.remove(), 250);
+    toast.classList.add("removing");
+    setTimeout(() => toast.remove(), 220);
   }
 
-  dismiss.addEventListener("click", removeToast);
-  timer = setTimeout(removeToast, 4000);
+  close.addEventListener("click", remove);
+  timer = setTimeout(remove, 4000);
 }
 
 $$("[data-toast]").forEach(button => {
@@ -145,158 +127,145 @@ $$("[data-toast]").forEach(button => {
   });
 });
 
-// Email input validation
+// Demonstration input: validates format, does not submit data.
 
-const demoEmail = $("#demoEmail");
-const emailMessage = $("#emailMessage");
+const emailInput = $("#sampleEmail");
+const emailFeedback = $("#inputFeedback");
 
-$("#emailSubmit").addEventListener("click", () => {
-  const email = demoEmail.value.trim();
+$("#sampleSubmit").addEventListener("click", () => {
+  emailFeedback.className = "input-feedback";
 
-  emailMessage.className = "field-message";
-
-  if (!email) {
-    emailMessage.textContent = "Please enter your email address.";
-    emailMessage.classList.add("error");
-    demoEmail.setAttribute("aria-invalid", "true");
-    demoEmail.focus();
+  if (!emailInput.value.trim()) {
+    emailFeedback.textContent = "Please enter your email.";
+    emailFeedback.classList.add("error");
+    emailInput.setAttribute("aria-invalid", "true");
+    emailInput.focus();
     return;
   }
 
-  if (!demoEmail.validity.valid) {
-    emailMessage.textContent = "Please enter a valid email address.";
-    emailMessage.classList.add("error");
-    demoEmail.setAttribute("aria-invalid", "true");
-    demoEmail.focus();
+  if (!emailInput.validity.valid) {
+    emailFeedback.textContent = "Enter a valid email address.";
+    emailFeedback.classList.add("error");
+    emailInput.setAttribute("aria-invalid", "true");
+    emailInput.focus();
     return;
   }
 
-  emailMessage.textContent = "Valid email format. No data was submitted.";
-  emailMessage.classList.add("success");
-  demoEmail.removeAttribute("aria-invalid");
+  emailFeedback.textContent = "Valid format. Nothing was submitted.";
+  emailFeedback.classList.add("success");
+  emailInput.removeAttribute("aria-invalid");
 });
 
-demoEmail.addEventListener("input", () => {
-  emailMessage.textContent = "";
-  emailMessage.className = "field-message";
-  demoEmail.removeAttribute("aria-invalid");
+emailInput.addEventListener("input", () => {
+  emailFeedback.textContent = "";
+  emailFeedback.className = "input-feedback";
+  emailInput.removeAttribute("aria-invalid");
 });
 
-// Native dialog
+// Native accessible dialog
 
-function openModal() {
-  if (typeof demoModal.showModal === "function") {
-    demoModal.showModal();
-  }
+$("#openModal").addEventListener("click", () => {
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else showToast("Your browser does not support native dialogs.", "Not supported");
+});
+
+function closeDialog() {
+  if (dialog.open) dialog.close();
 }
 
-function closeModal() {
-  if (demoModal.open) demoModal.close();
-}
-
-$("#openModal").addEventListener("click", openModal);
-$("#closeModal").addEventListener("click", closeModal);
-$("#cancelModal").addEventListener("click", closeModal);
+$("#closeModal").addEventListener("click", closeDialog);
+$("#cancelModal").addEventListener("click", closeDialog);
 
 $("#confirmModal").addEventListener("click", () => {
-  closeModal();
+  closeDialog();
   showToast("You confirmed the example action.");
 });
 
-demoModal.addEventListener("click", event => {
-  if (event.target === demoModal) closeModal();
+dialog.addEventListener("click", event => {
+  if (event.target === dialog) closeDialog();
 });
 
-// Tabs
+// Keyboard-accessible tabs
 
-$$(".tabs").forEach(tabList => {
+$$('[role="tablist"]').forEach(tabList => {
   const tabs = $$('[role="tab"]', tabList);
-  const panelIds = tabs.map(tab => tab.getAttribute("aria-controls"));
-  const panels = panelIds.map(id => document.getElementById(id));
 
-  function activateTab(index, moveFocus = false) {
+  function activate(index, focus = false) {
     tabs.forEach((tab, i) => {
-      const active = i === index;
+      const selected = i === index;
+      const panel = document.getElementById(tab.getAttribute("aria-controls"));
 
-      tab.classList.toggle("active", active);
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
+      tab.classList.toggle("active", selected);
+      tab.setAttribute("aria-selected", String(selected));
+      tab.tabIndex = selected ? 0 : -1;
 
-      panels[i].hidden = !active;
+      if (panel) panel.hidden = !selected;
     });
 
-    if (moveFocus) tabs[index].focus();
+    if (focus) tabs[index].focus();
   }
 
   tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => activateTab(index));
+    tab.addEventListener("click", () => activate(index));
 
     tab.addEventListener("keydown", event => {
-      let nextIndex;
+      let next = index;
 
-      if (event.key === "ArrowRight") {
-        nextIndex = (index + 1) % tabs.length;
-      } else if (event.key === "ArrowLeft") {
-        nextIndex = (index - 1 + tabs.length) % tabs.length;
-      } else if (event.key === "Home") {
-        nextIndex = 0;
-      } else if (event.key === "End") {
-        nextIndex = tabs.length - 1;
-      } else {
-        return;
-      }
+      if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+      else if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = tabs.length - 1;
+      else return;
 
       event.preventDefault();
-      activateTab(nextIndex, true);
+      activate(next, true);
     });
   });
 });
 
-// Copyable component snippets
+// Copyable component examples
 
 const snippets = {
-  button: `<button class="button button-primary" type="button">
-  Save changes →
+  buttons: `<button class="button button-primary" type="button">
+  Primary action →
 </button>
 
-<button class="button button-secondary" type="button">
-  Cancel
+<button class="button button-soft" type="button">
+  Secondary
 </button>
 
-<button class="button button-quiet" type="button">
-  Learn more
+<button class="button button-outline" type="button">
+  Ghost
 </button>`,
 
-  card: `<article class="sample-card">
-  <div class="sample-card-icon" aria-hidden="true">✳</div>
-  <div>
-    <span class="sample-kicker">A LITTLE MORE CLARITY</span>
-    <h4>Space to think.</h4>
-    <p>Good design gives the content room to breathe.</p>
+  cards: `<article class="sample-card">
+  <div class="sample-art" aria-hidden="true">◈</div>
+  <div class="sample-copy">
+    <strong>Modern design</strong>
+    <span>Clean, simple and elegant.</span>
   </div>
+  <span class="sample-arrow" aria-hidden="true">↗</span>
 </article>`,
 
-  input: `<div class="preview-form">
-  <label for="email">Email address</label>
-  <input id="email" type="email"
-    placeholder="you@example.com"
-    autocomplete="email">
-</div>`,
+  inputs: `<label for="email">Your email</label>
+<input id="email" type="email"
+  placeholder="name@example.com"
+  autocomplete="email">`,
 
-  alert: `<div class="alert alert-success" role="status">
-  <span class="alert-icon" aria-hidden="true">✓</span>
+  alerts: `<div class="alert alert-success" role="status">
+  <span class="alert-mark" aria-hidden="true">✓</span>
   <div>
-    <strong>All changes saved</strong>
-    <p>Your work is up to date.</p>
+    <strong>Success!</strong>
+    <p>Your changes have been saved.</p>
   </div>
 </div>`,
 
-  modal: `<dialog class="modal" id="myDialog">
-  <h2 id="dialogTitle">Confirm your action</h2>
+  modals: `<dialog class="dialog" id="myDialog">
+  <h2>Ready to continue?</h2>
   <p>Review the details before continuing.</p>
-  <button class="button button-secondary"
+  <button class="button button-primary"
     onclick="this.closest('dialog').close()">
-    Cancel
+    Continue
   </button>
 </dialog>
 
@@ -304,6 +273,17 @@ const snippets = {
   onclick="document.querySelector('#myDialog').showModal()">
   Open dialog
 </button>`,
+
+  navigation: `<nav class="sample-nav" aria-label="Example">
+  <strong>Studio</strong>
+  <a href="#home">Home</a>
+  <a href="#components">Docs</a>
+  <a href="#about">About</a>
+</nav>`,
+
+  badges: `<span class="badge badge-green">New</span>
+<span class="badge badge-blue">Pro</span>
+<span class="badge badge-neutral">Beta</span>`,
 
   tabs: `<div class="tabs" role="tablist" aria-label="Sections">
   <button class="tab active" role="tab"
@@ -313,85 +293,83 @@ const snippets = {
 </div>`
 };
 
-async function copyText(text) {
+async function copyText(value) {
   if (navigator.clipboard && window.isSecureContext) {
-    await navigator.clipboard.writeText(text);
+    await navigator.clipboard.writeText(value);
     return;
   }
 
   const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-
+  textarea.value = value;
+  textarea.readOnly = true;
+  textarea.style.cssText = "position:fixed;left:-9999px;top:0";
   document.body.append(textarea);
   textarea.select();
 
   const copied = document.execCommand("copy");
   textarea.remove();
 
-  if (!copied) {
-    throw new Error("Clipboard access is unavailable.");
-  }
+  if (!copied) throw new Error("Clipboard unavailable");
 }
 
 $$("[data-copy]").forEach(button => {
   button.addEventListener("click", async () => {
     const snippet = snippets[button.dataset.copy];
-
-    if (!snippet) {
-      showToast("This example is not available.", "Unable to copy");
-      return;
-    }
+    if (!snippet) return;
 
     try {
       await copyText(snippet);
-      showToast("Component HTML copied to clipboard.");
+      showToast("Component markup copied to clipboard.");
     } catch {
-      showToast("Allow clipboard access or copy the code manually.", "Unable to copy");
+      showToast("Clipboard access was unavailable.", "Unable to copy");
     }
   });
 });
 
 $("#copyStarter").addEventListener("click", async () => {
-  const code = `<link rel="stylesheet" href="style.css">
-<script src="script.js" defer><\/script>
-
-<button class="button button-primary"
-  data-toast="Hello, world!">
-  Get started →
-</button>`;
+  const source = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer><\/script>
+</head>
+<body>
+  <button class="button button-primary" type="button">
+    Build something good →
+  </button>
+</body>
+</html>`;
 
   try {
-    await copyText(code);
-    showToast("Starter markup copied to clipboard.");
+    await copyText(source);
+    showToast("Starter HTML copied to clipboard.");
   } catch {
-    showToast("Clipboard access is unavailable.", "Unable to copy");
+    showToast("Clipboard access was unavailable.", "Unable to copy");
   }
 });
 
-// Keep navigation highlighting aligned with the current section.
+// Keep sidebar state aligned with the visible section.
 
 if ("IntersectionObserver" in window) {
   const sections = $$("main section[id]");
-
   const observer = new IntersectionObserver(entries => {
-    const visible = entries
+    const current = entries
       .filter(entry => entry.isIntersecting)
       .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-    if (!visible) return;
+    if (!current) return;
 
-    $$(".nav-link").forEach(link => {
+    $$(".side-link").forEach(link => {
       link.classList.toggle(
         "active",
-        link.getAttribute("href") === `#${visible.target.id}`
+        link.getAttribute("href") === `#${current.target.id}`
       );
     });
   }, {
-    rootMargin: "-15% 0px -65% 0px",
-    threshold: [0, 0.25, 0.5]
+    rootMargin: "-15% 0px -70% 0px",
+    threshold: [0, 0.2, 0.5]
   });
 
   sections.forEach(section => observer.observe(section));
