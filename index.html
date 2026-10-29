@@ -1,321 +1,300 @@
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#fafaf9">
-  <meta name="description" content="Forma UI — a minimal, accessible, framework-free UI component library.">
-  <title>Forma UI — BoilerPlate [Open-Source]</title>
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="A refined, framework-free UI component library for the modern web.">
+  <title>UI Library — Beautiful components. Better websites.</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
   <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#home">
-      <span class="brand-mark">f.</span>
-      <span>forma<span class="brand-muted"> ui</span></span>
+    <a class="brand" href="#home" aria-label="UI Library home">
+      <span class="brand-symbol">✳</span>
+      <span>UI Library</span>
     </a>
 
-    <nav class="side-nav" aria-label="Main navigation">
-      <a class="nav-link active" href="#home"><span>01</span> Overview</a>
-      <a class="nav-link" href="#components"><span>02</span> Components</a>
-      <a class="nav-link" href="#foundations"><span>03</span> Foundations</a>
-      <a class="nav-link" href="#usage"><span>04</span> Get started</a>
+    <nav class="side-links" aria-label="Main navigation">
+      <a class="side-link active" href="#home"><span>⌂</span> Home</a>
+      <a class="side-link" href="#components"><span>◇</span> Components</a>
+      <a class="side-link" href="#docs"><span>▣</span> Docs</a>
+      <a class="side-link" href="#examples"><span>♧</span> Examples</a>
+      <a class="side-link" href="#about"><span>ⓘ</span> About</a>
     </nav>
 
     <div class="sidebar-bottom">
-      <button class="theme-toggle" id="themeToggle" type="button">
-        <span id="themeIcon" aria-hidden="true">◐</span>
-        <span id="themeLabel">Switch appearance</span>
+      <button class="appearance" id="themeToggle" type="button">
+        <span id="themeIcon">☼</span>
+        <span id="themeLabel">Light appearance</span>
+        <span class="appearance-arrow">⌄</span>
       </button>
-      <div class="sidebar-note">
-        <span class="status-dot"></span>
-        Vanilla by design.
-        <p>Made for the open web.</p>
+      <div class="sidebar-caption">
+        <strong>UI Library</strong>
+        <p>Simple components.<br>Beautiful websites.</p>
       </div>
+      <span class="sidebar-version">VANILLA EDITION · 01</span>
     </div>
   </aside>
 
-  <div class="mobile-bar">
-    <a class="brand" href="#home">
-      <span class="brand-mark">f.</span> forma ui
-    </a>
-    <button class="icon-button" id="menuToggle"
-      type="button" aria-label="Open navigation"
-      aria-expanded="false" aria-controls="sidebar">☰</button>
+  <div class="mobile-header">
+    <a class="brand" href="#home"><span class="brand-symbol">✳</span> UI Library</a>
+    <button class="icon-button" id="menuToggle" aria-label="Open menu"
+      aria-expanded="false" aria-controls="sidebar" type="button">☰</button>
   </div>
 
   <main id="home">
     <header class="topbar">
-      <span class="eyebrow"><span class="status-dot"></span> OPEN SOURCE UI FOUNDATION</span>
-      <a class="top-link" href="#usage">Read the quick start ↗</a>
+      <span class="eyebrow"><span class="status-dot"></span> UI COMPONENT LIBRARY</span>
+      <a href="#docs" class="top-link">Explore the documentation <span>↗</span></a>
     </header>
 
     <section class="hero section-pad">
       <div class="hero-copy">
-        <span class="version-tag">DESIGN SYSTEM / 01</span>
-        <h1>Less noise.<br>More <span class="serif">intention.</span></h1>
+        <span class="pill"><span>✳</span> Thoughtfully made for the web</span>
+        <h1>Build beautiful<br>websites, <span class="highlight">faster.</span></h1>
         <p class="hero-description">
-          A thoughtfully crafted UI foundation for the web.
-          Clean components, considered details, and absolutely
-          no framework required.
+          A lightweight, modern, and accessible UI component library.
+          Built with pure HTML, CSS and JavaScript — no frameworks,
+          no build tools, no unnecessary complexity.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#components">
-            Explore components <span>↘</span>
-          </a>
-          <a class="button button-secondary" href="#usage">
-            Get started
-          </a>
+          <a class="button button-primary" href="#components">Get started <span>→</span></a>
+          <a class="button button-outline" href="#components">View components</a>
         </div>
         <div class="hero-meta">
-          <span>HTML</span><span>CSS</span><span>JavaScript</span>
-          <span class="meta-divider"></span>
-          <span>Zero dependencies</span>
+          <span>HTML</span><span>CSS</span><span>JS</span>
+          <span class="meta-note">Zero dependencies</span>
         </div>
       </div>
 
-      <div class="hero-art" aria-label="Abstract layered paper artwork" role="img">
-        <div class="art-grid"></div>
-        <div class="art-orbit orbit-one"></div>
-        <div class="art-orbit orbit-two"></div>
-        <div class="art-disc">
-          <div class="disc-inner"></div>
-          <span class="art-symbol">f</span>
+      <div class="hero-visual" aria-label="Abstract glass sphere with an orbiting ring" role="img">
+        <div class="visual-grid"></div>
+        <div class="visual-glow"></div>
+        <div class="sphere-orbit orbit-back"></div>
+        <div class="sphere">
+          <div class="sphere-shine"></div>
+          <div class="sphere-core">✳</div>
+          <div class="sphere-reflection"></div>
         </div>
-        <div class="art-caption">
-          <span>FIG. 001</span>
-          <span>FORM FOLLOWS FUNCTION</span>
-        </div>
-        <span class="art-index">01 / 04</span>
+        <div class="sphere-orbit orbit-front"></div>
+        <div class="satellite"></div>
+        <div class="visual-note">Simple code.<br>Beautiful results.</div>
+        <span class="visual-coordinate">FIG 001 — FORM & FUNCTION</span>
       </div>
     </section>
 
-    <section class="principles section-pad" id="foundations">
-      <div class="section-heading">
-        <span class="section-index">A — PRINCIPLES</span>
-        <p>Good defaults. Room to make it yours.</p>
-      </div>
-      <div class="principle-grid">
-        <article class="principle">
-          <span class="principle-number">01</span>
-          <h3>Lightweight</h3>
-          <p>No dependencies or compilation. Just files you understand.</p>
-        </article>
-        <article class="principle">
-          <span class="principle-number">02</span>
-          <h3>Accessible</h3>
-          <p>Semantic HTML, keyboard support, and visible focus states.</p>
-        </article>
-        <article class="principle">
-          <span class="principle-number">03</span>
-          <h3>Adaptable</h3>
-          <p>CSS variables make colors, radius, and spacing easy to change.</p>
-        </article>
-        <article class="principle">
-          <span class="principle-number">04</span>
-          <h3>Responsive</h3>
-          <p>Layouts that adjust to small screens without extra libraries.</p>
-        </article>
-      </div>
+    <section class="feature-strip" aria-label="Library benefits">
+      <article class="feature">
+        <span class="feature-icon">♧</span>
+        <div><h3>Lightweight</h3><p>No heavy dependencies.<br>Just clean code.</p></div>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">ⓘ</span>
+        <div><h3>Accessible</h3><p>Semantic HTML and<br>accessible interactions.</p></div>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">⟳</span>
+        <div><h3>Customizable</h3><p>Adapt the design using<br>simple CSS variables.</p></div>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">▱</span>
+        <div><h3>Responsive</h3><p>Made for every screen,<br>from mobile to desktop.</p></div>
+      </article>
+      <article class="feature">
+        <span class="feature-icon">⌘</span>
+        <div><h3>Framework free</h3><p>No build tools or lock-in.<br>Just HTML, CSS and JS.</p></div>
+      </article>
     </section>
 
-    <section class="components-section section-pad" id="components">
-      <div class="section-heading section-heading-large">
-        <div>
-          <span class="section-index">B — COMPONENT LIBRARY</span>
-          <h2>The essentials,<br><span class="serif">considered.</span></h2>
+    <section class="gallery section-pad" id="components">
+      <div class="gallery-intro">
+        <span class="section-label">THE COLLECTION</span>
+        <h2>Beautiful, useful<br>components.</h2>
+        <p>A growing collection of practical UI elements.<br>Copy, customize, and make them yours.</p>
+        <a class="button button-outline" href="#examples">Browse the collection <span>→</span></a>
+      </div>
+
+      <article class="component-card" id="buttons">
+        <div class="preview button-preview" id="buttonPreview">
+          <div class="button-row">
+            <button class="button button-primary" type="button" data-toast="Primary button clicked.">Primary</button>
+            <button class="button button-soft" type="button" data-toast="Secondary button clicked.">Secondary</button>
+          </div>
+          <div class="button-row">
+            <button class="button button-outline" type="button" data-toast="Ghost button clicked.">Ghost</button>
+            <button class="button button-link" type="button" data-toast="Link button clicked.">Link →</button>
+          </div>
         </div>
-        <p>Small building blocks.<br>Useful from day one.</p>
-      </div>
+        <div class="card-footer">
+          <div><h3>Buttons</h3><p>Flexible actions for every use case.</p></div>
+          <button class="copy-button" data-copy="buttons" type="button">Copy code ↗</button>
+        </div>
+      </article>
 
-      <div class="component-grid">
-        <article class="component-card">
-          <div class="component-card-head">
-            <div>
-              <span class="component-label">01 / ACTIONS</span>
-              <h3>Buttons</h3>
-            </div>
-            <button class="copy-button" data-copy="button" type="button"
-              aria-label="Copy button example">Copy ↗</button>
-          </div>
-          <div class="preview preview-buttons" id="button">
-            <button class="button button-primary" type="button"
-              data-toast="Primary action selected.">Primary action <span>↗</span></button>
-            <button class="button button-secondary" type="button"
-              data-toast="Secondary action selected.">Secondary</button>
-            <button class="button button-quiet" type="button"
-              data-toast="Quiet action selected.">Quiet action</button>
-          </div>
-          <p class="component-description">Three useful levels of visual emphasis.</p>
-        </article>
+      <article class="component-card" id="cards">
+        <div class="preview card-preview" id="cardPreview">
+          <article class="sample-card">
+            <div class="sample-art">◈</div>
+            <div class="sample-copy"><strong>Modern design</strong><span>Clean, simple and elegant.</span></div>
+            <span class="sample-arrow">↗</span>
+          </article>
+        </div>
+        <div class="card-footer">
+          <div><h3>Cards</h3><p>Flexible content with thoughtful spacing.</p></div>
+          <button class="copy-button" data-copy="cards" type="button">Copy code ↗</button>
+        </div>
+      </article>
 
-        <article class="component-card">
-          <div class="component-card-head">
-            <div>
-              <span class="component-label">02 / CONTENT</span>
-              <h3>Cards</h3>
-            </div>
-            <button class="copy-button" data-copy="card" type="button"
-              aria-label="Copy card example">Copy ↗</button>
-          </div>
-          <div class="preview" id="card">
-            <article class="sample-card">
-              <div class="sample-card-icon">✳</div>
-              <div>
-                <span class="sample-kicker">A LITTLE MORE CLARITY</span>
-                <h4>Space to think.</h4>
-                <p>Good design gives the content room to breathe.</p>
-              </div>
-              <span class="sample-arrow">↗</span>
-            </article>
-          </div>
-          <p class="component-description">Quiet surfaces with clear content hierarchy.</p>
-        </article>
+      <article class="component-card" id="inputs">
+        <div class="preview input-preview" id="inputPreview">
+          <label for="sampleEmail">Your email</label>
+          <input id="sampleEmail" type="email" placeholder="name@example.com">
+          <button class="button button-primary full-width" id="sampleSubmit" type="button">Try validation</button>
+          <p class="input-feedback" id="inputFeedback" aria-live="polite"></p>
+        </div>
+        <div class="card-footer">
+          <div><h3>Inputs</h3><p>Clear forms with useful focus states.</p></div>
+          <button class="copy-button" data-copy="inputs" type="button">Copy code ↗</button>
+        </div>
+      </article>
 
-        <article class="component-card">
-          <div class="component-card-head">
-            <div>
-              <span class="component-label">03 / INPUT</span>
-              <h3>Form fields</h3>
-            </div>
-            <button class="copy-button" data-copy="input" type="button"
-              aria-label="Copy input example">Copy ↗</button>
+      <article class="component-card" id="alerts">
+        <div class="preview alert-preview" id="alertPreview">
+          <div class="alert alert-success" role="status">
+            <span class="alert-mark">✓</span>
+            <div><strong>Success!</strong><p>Your changes have been saved.</p></div>
           </div>
-          <div class="preview preview-form" id="input">
-            <label for="demoEmail">Email address</label>
-            <input id="demoEmail" type="email" placeholder="you@example.com"
-              autocomplete="email">
-            <button class="button button-primary button-full" id="emailSubmit"
-              type="button">Try validation <span>→</span></button>
-            <p class="field-message" id="emailMessage" aria-live="polite"></p>
+          <div class="alert alert-info" role="note">
+            <span class="alert-mark">i</span>
+            <div><strong>For your information</strong><p>Everything is up to date.</p></div>
           </div>
-          <p class="component-description">Clear labels, focus rings, and real validation.</p>
-        </article>
+        </div>
+        <div class="card-footer">
+          <div><h3>Alerts</h3><p>Informative, subtle feedback messages.</p></div>
+          <button class="copy-button" data-copy="alerts" type="button">Copy code ↗</button>
+        </div>
+      </article>
 
-        <article class="component-card">
-          <div class="component-card-head">
-            <div>
-              <span class="component-label">04 / FEEDBACK</span>
-              <h3>Alerts</h3>
-            </div>
-            <button class="copy-button" data-copy="alert" type="button"
-              aria-label="Copy alert example">Copy ↗</button>
+      <article class="component-card" id="modals">
+        <div class="preview modal-preview" id="modalPreview">
+          <div class="mini-modal">
+            <button class="mini-close" type="button" aria-label="Close preview">×</button>
+            <strong>A moment to confirm.</strong>
+            <p>A simple modal example with clear actions.</p>
+            <div class="mini-actions"><span>Cancel</span><span>Continue →</span></div>
           </div>
-          <div class="preview" id="alert">
-            <div class="alert alert-success" role="status">
-              <span class="alert-icon">✓</span>
-              <div><strong>All changes saved</strong><p>Your work is up to date.</p></div>
-            </div>
-            <div class="alert alert-neutral" role="note">
-              <span class="alert-icon">i</span>
-              <div><strong>A small heads-up</strong><p>This is an informational message.</p></div>
-            </div>
-          </div>
-          <p class="component-description">Feedback with meaning beyond color alone.</p>
-        </article>
+          <button class="button button-outline full-width" id="openModal" type="button">Open live modal ↗</button>
+        </div>
+        <div class="card-footer">
+          <div><h3>Modals</h3><p>Focused, accessible dialog windows.</p></div>
+          <button class="copy-button" data-copy="modals" type="button">Copy code ↗</button>
+        </div>
+      </article>
 
-        <article class="component-card">
-          <div class="component-card-head">
-            <div>
-              <span class="component-label">05 / OVERLAYS</span>
-              <h3>Dialog</h3>
-            </div>
-            <button class="copy-button" data-copy="modal" type="button"
-              aria-label="Copy dialog example">Copy ↗</button>
+      <article class="component-card" id="navigation">
+        <div class="preview nav-preview" id="navPreview">
+          <div class="sample-nav">
+            <strong><span>✳</span> Studio</strong>
+            <a href="#home">Home</a><a href="#components">Docs</a><a href="#examples">About</a>
+            <button type="button" aria-label="Show navigation message" data-toast="Navigation example selected.">☰</button>
           </div>
-          <div class="preview preview-dialog" id="modal">
-            <div class="dialog-mini">
-              <span class="dialog-mini-icon">✳</span>
-              <div><strong>A focused moment.</strong><p>Keep the next step clear.</p></div>
-            </div>
-            <button class="button button-secondary button-full" id="openModal"
-              type="button">Open interactive dialog ↗</button>
-          </div>
-          <p class="component-description">An actual dialog with Escape and backdrop support.</p>
-        </article>
+        </div>
+        <div class="card-footer">
+          <div><h3>Navigation</h3><p>Clean navigation for modern websites.</p></div>
+          <button class="copy-button" data-copy="navigation" type="button">Copy code ↗</button>
+        </div>
+      </article>
 
-        <article class="component-card">
-          <div class="component-card-head">
-            <div>
-              <span class="component-label">06 / NAVIGATION</span>
-              <h3>Tabs</h3>
-            </div>
-            <button class="copy-button" data-copy="tabs" type="button"
-              aria-label="Copy tabs example">Copy ↗</button>
+      <article class="component-card" id="badges">
+        <div class="preview badge-preview" id="badgePreview">
+          <span class="badge badge-green">New</span>
+          <span class="badge badge-blue">Pro</span>
+          <span class="badge badge-neutral">Beta</span>
+          <span class="badge badge-dark">Stable</span>
+        </div>
+        <div class="card-footer">
+          <div><h3>Badges</h3><p>Small labels for states and categories.</p></div>
+          <button class="copy-button" data-copy="badges" type="button">Copy code ↗</button>
+        </div>
+      </article>
+
+      <article class="component-card" id="tabsCard">
+        <div class="preview tabs-preview" id="tabsPreview">
+          <div class="tabs" role="tablist" aria-label="Example tabs">
+            <button class="tab active" id="tabOne" role="tab" aria-selected="true" aria-controls="panelOne" type="button">Overview</button>
+            <button class="tab" id="tabTwo" role="tab" aria-selected="false" aria-controls="panelTwo" type="button" tabindex="-1">Details</button>
           </div>
-          <div class="preview" id="tabs">
-            <div class="tabs" role="tablist" aria-label="Example content">
-              <button class="tab active" id="tab-design" type="button"
-                role="tab" aria-selected="true" aria-controls="panel-design"
-                data-tab="design">Design</button>
-              <button class="tab" id="tab-code" type="button"
-                role="tab" aria-selected="false" aria-controls="panel-code"
-                data-tab="code" tabindex="-1">Code</button>
-              <button class="tab" id="tab-notes" type="button"
-                role="tab" aria-selected="false" aria-controls="panel-notes"
-                data-tab="notes" tabindex="-1">Notes</button>
-            </div>
-            <div class="tab-panel" id="panel-design" role="tabpanel"
-              aria-labelledby="tab-design" tabindex="0">Start with hierarchy, spacing, and purpose.</div>
-            <div class="tab-panel" id="panel-code" role="tabpanel"
-              aria-labelledby="tab-code" tabindex="0" hidden>Keep markup semantic and styles reusable.</div>
-            <div class="tab-panel" id="panel-notes" role="tabpanel"
-              aria-labelledby="tab-notes" tabindex="0" hidden>Make every interaction useful and clear.</div>
-          </div>
-          <p class="component-description">Keyboard-operable tabs with real content panels.</p>
-        </article>
-      </div>
+          <div id="panelOne" class="tab-panel" role="tabpanel" aria-labelledby="tabOne">A clear starting point for your next project.</div>
+          <div id="panelTwo" class="tab-panel" role="tabpanel" aria-labelledby="tabTwo" hidden>Small, reusable pieces that work together.</div>
+        </div>
+        <div class="card-footer">
+          <div><h3>Tabs</h3><p>Switch between content without clutter.</p></div>
+          <button class="copy-button" data-copy="tabs" type="button">Copy code ↗</button>
+        </div>
+      </article>
     </section>
 
-    <section class="usage-section section-pad" id="usage">
-      <div class="usage-copy">
-        <span class="section-index">C — START BUILDING</span>
-        <h2>Nothing to install.<br><span class="serif">Just make.</span></h2>
-        <p>Download or copy the files, link the stylesheet, and start building. Use the design tokens to make the library feel like your own.</p>
-        <a class="button button-primary" href="#components">Explore the library ↗</a>
-      </div>
+    <section class="code-section section-pad" id="docs">
       <div class="code-window">
         <div class="code-top">
           <div class="window-dots"><i></i><i></i><i></i></div>
           <span>index.html</span>
-          <button class="copy-button" id="copyStarter" type="button">Copy code ↗</button>
+          <button class="copy-button" id="copyStarter" type="button">Copy source ↗</button>
         </div>
-        <pre><code id="starterCode">&lt;link rel="stylesheet" href="style.css"&gt;
-&lt;script src="script.js" defer&gt;&lt;/script&gt;
-
-&lt;button class="button button-primary"
-  data-toast="Hello, world!"&gt;
-  Get started →
-&lt;/button&gt;</code></pre>
-        <div class="code-foot"><span>HTML / CSS / JS</span><span>NO BUILD STEP</span></div>
+        <pre><code id="starterCode">&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button class="button button-primary"&gt;
+    Build something good →
+  &lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+        <div class="code-bottom"><span>PURE HTML · CSS · JAVASCRIPT</span><span>NO BUILD STEP REQUIRED</span></div>
+      </div>
+      <div class="code-copy">
+        <span class="section-label">MADE FOR DEVELOPERS</span>
+        <h2>Clean code.<br>No build tools.</h2>
+        <p>Open the files, copy a component, and start building. Customize the tokens and keep the parts you actually need.</p>
+        <a class="button button-primary" href="#about">How it works <span>→</span></a>
+        <ul class="check-list">
+          <li>Pure HTML, CSS and JavaScript</li>
+          <li>No dependencies or compilation</li>
+          <li>Easy to customize and maintain</li>
+          <li>Responsive and keyboard friendly</li>
+          <li>Reusable components with real behavior</li>
+        </ul>
       </div>
     </section>
 
-    <footer class="footer section-pad">
-      <a class="brand" href="#home"><span class="brand-mark">f.</span> forma ui</a>
-      <p>Made with care. Built for the open web.</p>
-      <a class="footer-top" href="#home">Back to top ↑</a>
+    <section class="about-section section-pad" id="about">
+      <div><span class="section-label">BUILT ON GOOD DEFAULTS</span><h2>Made to get out<br>of your way.</h2></div>
+      <p>Use what you need. Change what you want. The library is a starting point, not a set of rules. Every component is built from familiar web standards.</p>
+    </section>
+
+    <footer class="footer section-pad" id="examples">
+      <a class="brand" href="#home"><span class="brand-symbol">✳</span> UI Library</a>
+      <p>Simple components. Beautiful websites.</p>
+      <nav aria-label="Footer navigation"><a href="#home">Home</a><a href="#components">Components</a><a href="#docs">Docs</a><button id="footerTheme" type="button" aria-label="Toggle appearance">◐</button></nav>
     </footer>
   </main>
 
-  <dialog class="modal" id="demoModal" aria-labelledby="modalTitle">
-    <div class="modal-top">
-      <span class="section-index">A MOMENT OF CLARITY</span>
-      <button class="icon-button" id="closeModal" type="button"
-        aria-label="Close dialog">×</button>
-    </div>
-    <div class="modal-symbol">✳</div>
-    <h2 id="modalTitle">Make room for good ideas.</h2>
-    <p>This dialog is interactive, keyboard accessible, and built with the native HTML dialog element.</p>
-    <div class="modal-actions">
-      <button class="button button-secondary" id="cancelModal" type="button">Not now</button>
-      <button class="button button-primary" id="confirmModal" type="button">Sounds good ↗</button>
-    </div>
+  <dialog class="dialog" id="demoDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-top"><span class="section-label">QUICK CONFIRMATION</span><button class="icon-button" id="closeModal" type="button" aria-label="Close dialog">×</button></div>
+    <div class="dialog-symbol">✳</div>
+    <h2 id="dialogTitle">Ready to continue?</h2>
+    <p>This is a working native dialog. You can customize the content, buttons, and behavior for your project.</p>
+    <div class="dialog-actions"><button class="button button-outline" id="cancelModal" type="button">Cancel</button><button class="button button-primary" id="confirmModal" type="button">Continue →</button></div>
   </dialog>
 
-  <div class="toast-region" id="toastRegion" aria-live="polite"
-    aria-atomic="false"></div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
 </body>
 </html>
